@@ -1,3 +1,9 @@
+SpeedBoostHookAddr+0:
+    B TrampolineSpeedBoostTrigger
+
+ApplyMoveEffectJumpAddr+0:
+    B TrampolineAfterApplyMoveEffect
+
 IsTargetInRangeHookAddr+0:
     B TrampolineIsTargetInRange
 

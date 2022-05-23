@@ -71,6 +71,37 @@ cotInternalTrampolineApplyMoveEffect:
   b ApplyMoveEffectHookAddr+4
 
 .align 4
+TrampolineSpeedBoostTrigger:
+  // Backup registers
+  push {r0-r9, r11, r12}
+
+  // Call hook
+  mov r0, r5
+  bl SpeedBoostTrigger
+
+  // Restore register
+  pop {r0-r9, r11, r12}
+
+  // Skip over original code
+  b SpeedBoostJumpAddr
+
+.align 4
+TrampolineAfterApplyMoveEffect:
+  // Backup registers
+  push {r0-r9, r11, r12}
+
+  // Call hook
+  mov r0, r9
+  bl IncreaseSpeedBoostCounter
+
+  // Restore register
+  pop {r0-r9, r11, r12}
+
+  // Restore the instruction that was replaced with the patch and call the original function
+  cmp r10, #0x0
+  b ApplyMoveEffectJumpAddr+4
+
+.align 4
 TrampolineIsTargetInRange:
   // Backup registers (r0 is the return value)
   push {r1-r9, r11, r12}

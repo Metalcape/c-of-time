@@ -6,6 +6,9 @@ ApplyItemEffectHookAddr = 0x0231C434;
 ApplyItemEffectJumpAddr = 0x0231D574;
 
 /* Add your own symbols here... */
+SpeedBoostHookAddr = 0x02310EE8;
+SpeedBoostJumpAddr = 0x02310F20;
+
 IsTargetInRangeHookAddr = 0x0231B148;
 CheckMonsterInPath = 0x0231B1D8;
 IsTargetInRangeJumpAddr = 0x0231B1E4;

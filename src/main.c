@@ -1,20 +1,6 @@
 #include <pmdsky.h>
 #include <cot.h>
 
-// Remove the comment in patches/patch.cotpatch to enable this example patch
-int CustomGetMovePower(struct entity* entity, struct move* move) {
-  // Randomize move power
-  int rolledPower = RandRange(1, 100);
-
-  // Print the rolled value to the message log
-  char messageBuffer[32];
-  Snprintf(messageBuffer, 32, "Rolled move power %d!", rolledPower);
-  
-  LogMessage(entity, messageBuffer, true);
-
-  return rolledPower;
-}
-
 // Trigger speed boost and reset counter
 // Also reset counter if last action was not a move
 void SpeedBoostTrigger(struct entity* entity) {
@@ -51,10 +37,14 @@ void SpeedBoostTrigger(struct entity* entity) {
     *counter = 0;
 }
 
+// Increase the speed boost counter if the entity used a move
 void IncreaseSpeedBoostCounter(struct entity* entity) {
   if (AbilityIsActive(entity, ABILITY_SPEED_BOOST)) {
     struct monster* mon = entity->info;
-    mon->field_0x1f = mon->field_0x1f + 1;
+    uint8_t* counter = &(mon->field_0x1f);
+    uint16_t last_action = mon->action_id;
+    if(last_action == 0x14 || last_action == 0x15)
+      *counter = *counter + 1;
   }
 }
 

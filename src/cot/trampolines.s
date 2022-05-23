@@ -71,6 +71,36 @@ cotInternalTrampolineApplyMoveEffect:
   b ApplyMoveEffectHookAddr+4
 
 .align 4
+TrampolineIsTargetInRange:
+  // Backup registers (r0 is the return value)
+  push {r1-r9, r11, r12}
+
+  // Call hook
+  bl IqCheckForObstacles
+
+  // Restore registers & jump back to original function
+  pop {r1-r9, r11, r12}
+  b IsTargetInRangeHookAddr+4
+
+.align 4
+TrampolineCheckMonsterInPath:
+  // Backup registers (r0 is the return value)
+  push {r1-r9, r11, r12}
+
+  // Call hook
+  bl GapProberIsActive
+
+  // If user has Gap Prober, skip to next iteration of the loop
+  cmp r0,#0x1
+  popeq {r1-r9, r11, r12}
+  beq IsTargetInRangeJumpAddr
+
+  // Otherwise restore replaced instruction and call the original function
+  pop {r1-r9, r11, r12}
+  cmp r0,#0x0
+  b CheckMonsterInPath+4
+
+.align 4
 move_effect_input:
   .word 0
   .word 0

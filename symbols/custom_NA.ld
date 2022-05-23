@@ -6,6 +6,9 @@ ApplyItemEffectHookAddr = 0x0231B9D8;
 ApplyItemEffectJumpAddr = 0x0231CB14;
 
 /* Add your own symbols here... */
+IsTargetInRangeHookAddr = 0x0231A6E8;
+CheckMonsterInPath = 0x0231A778;
+IsTargetInRangeJumpAddr = 0x0231A794;
 
 /* !file arm9 */
 ChangeGlobalBorderColor = 0x02027A80;
